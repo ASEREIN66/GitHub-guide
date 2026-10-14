@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="J4qgFBGJ9iXTW0FVoVcw0I">
+<head data-page-node-id="hV6PWR2l7Lqh7veny3FekC">
+<meta charset="UTF-8" data-page-node-id="LN1JCeAnCAmr4yEtr2lXox">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="o1pzuGZmHZ9w8LzY95IdVe">
+<title>GitHub 小白使用手册</title>
+<style>
+:root{
+  --bg:#ffffff; --bg-soft:#f7f7f5; --bg-sunken:#f1efe8;
+  --text:#1f2328; --text-mid:#4a4f57; --text-dim:#7a7f87;
+  --line:#e3e1dc; --line-strong:#c9c6bf;
+  --accent:#185FA5; --accent-soft:#E6F1FB;
+  --green:#0F6E56; --green-soft:#E1F5EE;
+  --amber:#854F0B; --amber-soft:#FAEEDA;
+  --red:#A32D2D; --red-soft:#FCEBEB;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.75;
+}
+.wrap{display:flex; max-width:1180px; margin:0 auto; align-items:flex-start}
+/* 侧边目录 */
+nav.toc{
+  position:sticky; top:0; width:230px; flex-shrink:0;
+  height:100vh; overflow-y:auto; padding:28px 18px 40px 0;
+  border-right:1px solid var(--line);
+}
+nav.toc h4{font-size:12px; color:var(--text-dim); margin:0 0 12px; font-weight:500; letter-spacing:.5px}
+nav.toc a{
+  display:block; font-size:13.5px; color:var(--text-mid); text-decoration:none;
+  padding:5px 10px; border-radius:6px; margin-bottom:2px;
+}
+nav.toc a:hover{background:var(--bg-sunken); color:var(--text)}
+nav.toc a.sub{padding-left:24px; font-size:13px; color:var(--text-dim)}
+/* 主内容 */
+main{flex:1; min-width:0; padding:36px 24px 120px 40px}
+h1{font-size:27px; font-weight:600; margin:0 0 8px}
+.lede{color:var(--text-mid); margin:0 0 6px}
+.meta{font-size:13px; color:var(--text-dim); margin:0 0 28px}
+h2{font-size:20px; font-weight:600; margin:44px 0 14px; padding-top:14px; border-top:1px solid var(--line)}
+h3{font-size:16px; font-weight:600; margin:26px 0 10px}
+h4{font-size:14.5px; font-weight:600; margin:18px 0 8px}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px; padding-left:22px}
+li{margin-bottom:6px}
+code{
+  background:var(--bg-sunken); padding:1px 6px; border-radius:4px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; color:var(--text)
+}
+pre{
+  background:#fbfaf7; border:1px solid var(--line); border-radius:8px;
+  padding:14px 16px; overflow-x:auto; margin:0 0 16px;
+}
+pre code{background:none; padding:0; font-size:13px; line-height:1.7; color:#24292f}
+table{width:100%; border-collapse:collapse; margin:0 0 18px; font-size:14px}
+th,td{border:1px solid var(--line); padding:8px 11px; text-align:left; vertical-align:top}
+th{background:var(--bg-sunken); font-weight:600; font-size:13.5px}
+td p{margin:0}
+.callout{
+  border:1px solid var(--line); border-left:3px solid var(--accent);
+  background:var(--accent-soft); border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0 18px; font-size:14px
+}
+.callout.warn{border-left-color:var(--amber); background:var(--amber-soft)}
+.callout.ok{border-left-color:var(--green); background:var(--green-soft)}
+.callout.bad{border-left-color:var(--red); background:var(--red-soft)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{font-weight:600}
+.kbd{
+  display:inline-block; background:#fff; border:1px solid var(--line-strong);
+  border-bottom-width:2px; border-radius:5px; padding:0 6px; font-size:12.5px; font-family:inherit
+}
+/* 界面示意图 */
+.mock{
+  border:1px solid var(--line-strong); border-radius:10px; overflow:hidden;
+  margin:16px 0 10px; background:#fff; font-size:13px
+}
+.mock-bar{
+  display:flex; align-items:center; gap:10px; padding:9px 12px;
+  background:var(--bg-sunken); border-bottom:1px solid var(--line); font-size:12.5px; color:var(--text-mid)
+}
+.mock-dot{width:9px;height:9px;border-radius:50%;background:var(--line-strong);display:inline-block}
+.mock-body{padding:0}
+.mock-row{display:flex; align-items:center; gap:10px; padding:8px 12px; border-bottom:1px solid var(--line)}
+.mock-row:last-child{border-bottom:none}
+.mock-tabs{display:flex; gap:16px; padding:9px 14px; border-bottom:1px solid var(--line); font-size:12.5px; color:var(--text-mid)}
+.mock-tabs .on{color:var(--text); font-weight:600; border-bottom:2px solid #fd8c73; padding-bottom:6px; margin-bottom:-9px}
+.mock-btn{
+  border:1px solid var(--line-strong); border-radius:6px; padding:3px 9px;
+  font-size:12px; background:#fff; color:var(--text); white-space:nowrap
+}
+.mock-btn.green{background:#1f883d; color:#fff; border-color:#1a7f37}
+.mock-btn.blue{background:#0969da; color:#fff; border-color:#0860ca}
+.spacer{flex:1}
+.pin{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:19px; height:19px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:11.5px; font-weight:600; flex-shrink:0
+}
+.pin.g{background:var(--green)}
+.legend{margin:10px 0 22px; font-size:13.5px}
+.legend div{display:flex; gap:9px; align-items:flex-start; margin-bottom:7px}
+.legend .pin{margin-top:3px}
+.mock-file{display:flex; justify-content:space-between; padding:7px 14px; border-bottom:1px solid var(--line); font-size:12.5px}
+.mock-file .r{color:var(--text-dim)}
+.mock-2col{display:flex; gap:0}
+.mock-2col .l{flex:1; border-right:1px solid var(--line)}
+.mock-2col .r{width:250px; padding:12px 14px; font-size:12.5px}
+.mock-side{padding:10px 0; border-bottom:1px solid var(--line); font-size:12.5px}
+.mock-side:last-child{border:none}
+.mock-side b{font-weight:600}
+.empty{
+  border:2px dashed var(--line-strong); border-radius:8px; padding:20px;
+  text-align:center; color:var(--text-dim); font-size:13px; margin:14px
+}
+/* 步骤卡片 */
+.step{
+  border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-bottom:14px; background:#fff
+}
+.step-h{display:flex; align-items:center; gap:11px; margin-bottom:10px}
+.step-n{
+  width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0
+}
+.step-t{font-size:15.5px; font-weight:600}
+.step p:last-child, .step ul:last-child, .step ol:last-child{margin-bottom:0}
+.tagpath{
+  font-family:ui-monospace,Menlo,monospace; font-size:12.5px; color:var(--text-mid);
+  background:var(--bg-sunken); border-radius:5px; padding:2px 7px; display:inline-block; margin-bottom:8px
+}
+.two{display:flex; gap:18px; flex-wrap:wrap}
+.two>div{flex:1; min-width:260px}
+footer{margin-top:50px; padding-top:16px; border-top:1px solid var(--line); font-size:13px; color:var(--text-dim)}
+@media (max-width:860px){
+  .wrap{flex-direction:column}
+  nav.toc{position:static; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--line); padding:20px 24px}
+  main{padding:24px}
+}
+</style>
+</head>
+<body data-page-node-id="m3eoZ0fn4PbH4LWpTUpUKH">
+<div class="wrap" data-page-node-id="5sOfIbSJ9jUGU9YRPaBLrF">
+
+<nav class="toc" data-page-node-id="SziW9nZxP9R47ww40Vm6ia">
+  <h4 data-page-node-id="VBuAZRyXX3J5YviPZvbcva">目录</h4>
+  <a href="#q0" data-page-node-id="RyuDqzpmrFs5ogXkmLdscy">0. 你找不到那个链接</a>
+  <a href="#q1" data-page-node-id="Dy5nugGrSTfsTmZPvV4bNP">1. GitHub 界面地图</a>
+  <a href="#q1-1" class="sub" data-page-node-id="FIiWNLirdcyilLwsspw5Kv">1.1 顶部导航栏</a>
+  <a href="#q1-2" class="sub" data-page-node-id="iVepetjSRyn0EMHhgB6jXa">1.2 个人主页</a>
+  <a href="#q1-3" class="sub" data-page-node-id="5gSzBXqNhg4xlHMatBXbC0">1.3 仓库页面</a>
+  <a href="#q1-4" class="sub" data-page-node-id="Fl6MEXkekU2hw0DWdyhlXb">1.4 文件页面</a>
+  <a href="#q2" data-page-node-id="XiWtrrScHE0OxOb3i6IABp">2. 名词白话解释</a>
+  <a href="#q3" data-page-node-id="Kelhq808TIhenXrxM3ZnGC">3. 上传小工具全流程</a>
+  <a href="#q3-0" class="sub" data-page-node-id="NG6TxAADPkk0usjWSYP27N">3.0 先决定走哪条路</a>
+  <a href="#q3-1" class="sub" data-page-node-id="LOCROGq2aLuKMqIfCa4LQz">3.1 网页法（推荐）</a>
+  <a href="#q3-2" class="sub" data-page-node-id="N2vyHtgsxsdqhRRAVqwBf2">3.2 命令行法</a>
+  <a href="#q4" data-page-node-id="nSMY9VSJNlU9Qt0VSGSrmv">4. 以后怎么更新</a>
+  <a href="#q5" data-page-node-id="UVrEmjDwLxL3NYHw2TfoVZ">5. 报错对照表</a>
+  <a href="#q6" data-page-node-id="gWAMGJQk97ZB73Ct9gB7tF">6. 拿到链接之后</a>
+</nav>
+
+<main data-page-node-id="ELaIN79YmpyASRypstTicw">
+<h1 data-page-node-id="xWNGlKEHNzbKGEOzvBx5ax">GitHub 小白使用手册</h1>
+<p class="lede" data-page-node-id="IrYILCjDEJEyIrcZTqCOvw">从「哪个按钮在哪」到「把 vibe coding 出来的小工具变成一条永久链接」。</p>
+<p class="meta" data-page-node-id="G8LNfBO86enkt3F8e36qHl">适用对象：第一次用 GitHub / 只想把网页小工具放上去的人 · 2026-10</p>
+
+<div class="callout ok" data-page-node-id="OZk9wz1kgBg1DyP6zi3vWE">
+<p data-page-node-id="B6bvGXqFf6YGFnvJbhoIfi"><strong data-page-node-id="1aucSOajkpEr2FdUBcOgZq">先说结论：</strong>如果你只想把小工具放上去拿一个链接，全程可以在网页上点鼠标完成，不需要装 Git、不需要敲命令、不需要理解分支是什么。真正要用到的只有三个地方：<code data-page-node-id="JjM6ps249XioTT3hkfk7T9">+</code> 号建仓库、<code data-page-node-id="fiHv5x4u5rHxHTsilh0aaz">Add file</code> 传文件、<code data-page-node-id="N0YQ9LDyOfEsE608Ye25Hk">Settings</code> 开 Pages。</p>
+</div>
+
+<h2 id="q0" data-page-node-id="GhV04ujh5KxiOhjRPJMj18">0. 你找不到 "uploading an existing file"</h2>
+
+<p data-page-node-id="pl01zG7DSeoUWMfCS2KWCy">这句话只在<strong data-page-node-id="S1VzbaeHu1n0P6xzUnQXQ6">刚建好、还空着的仓库</strong>页面上出现，是页面中间那段提示语里的一个蓝色链接，位置不固定、新版界面还会改文案，所以不用死找。下面三条路都能到同一个上传页，<strong data-page-node-id="zkj82ynyvTvvd1ciimA5sC">第三条最稳</strong>：</p>
+
+<table data-page-node-id="Gk8RDWDRSi5QPmz4HsTQZv">
+<tr data-page-node-id="SWmxwQDYKYHWSUDpDFl4uw"><th style="width:80px" data-page-node-id="pn0jQir9kzD5PWgQZq7bX1">方式</th><th data-page-node-id="GQ1x61L2kDGbCvxhFC0wKH">操作</th><th data-page-node-id="o8us8D52V8f0BpqAcArLsB">说明</th></tr>
+<tr data-page-node-id="ALtMBbsp1Rddrm9RjJRTdY"><td data-page-node-id="zBVl9JmSl7iWuhcFXDtMCl">找链接</td><td data-page-node-id="F7ddW3iBMf8cLAaBqBm1nF">空仓库页面中间的提示语里，蓝色文字 <code data-page-node-id="ygLGV4Pae3BG6XtQWlk1q8">uploading an existing file</code></td><td data-page-node-id="De1M2S6sSCxJCQVft1gfIG">文案可能变成别的，找不到很正常</td></tr>
+<tr data-page-node-id="2UJxnhGMkb6UgbpQ1mP2hj"><td data-page-node-id="buIsCYoGMCCr76Sdk4AU2K">点按钮</td><td data-page-node-id="C3p1aBJplBACnlU3Is7iFD">仓库文件列表<strong data-page-node-id="FcMEqvFBMIjg2EFw6EqMLD">右上角</strong> <code data-page-node-id="M7RU3VWdXRrJlBYaAPHp0k">Add file</code> → <code data-page-node-id="9Qm4tkGK0TDj0UA9mRRkEE">Upload files</code></td><td data-page-node-id="AgO3kxR4h65SriS45PzILI">任何仓库都有，最通用</td></tr>
+<tr data-page-node-id="AEi2Jk9RH3U3MkRhWABZzW"><td data-page-node-id="Ki7DZesUqskPzTucg6jGyU">改网址</td><td data-page-node-id="WOVZp5sraosDCUHnNNP02a">浏览器地址栏直接访问：<br data-page-node-id="Gi3zWp0TfgOny7JK19uevE"><code data-page-node-id="VTgYm6bgCVysfT4gASo4uK">https://github.com/你的用户名/仓库名/upload</code></td><td data-page-node-id="ZgBc1Xz0iZpi4sBjN2CvFx">一定有效，把用户名和仓库名换成你自己的</td></tr>
+</table>
+
+<div class="callout" data-page-node-id="zYabZ2JezHtAfEWiTYz9W8">
+<p data-page-node-id="CLXjzxrjIu0tjB59tc4tTA">如果打开上传页看到的是一句「拖文件到这里」的虚线框，那就对了 —— 把文件从 Finder 拖进去即可。</p>
+</div>
+
+<h2 id="q1" data-page-node-id="DzgT7kStf5KTyH1t0OZjIq">1. GitHub 界面地图</h2>
+
+<h3 id="q1-1" data-page-node-id="JKBOkYRFYnFo1qCJD84v71">1.1 顶部导航栏（每个页面都有）</h3>
+
+<div class="mock" data-page-node-id="gbHZP6vu8efX4BNkDHg6Ex">
+  <div class="mock-bar" data-page-node-id="spXXSzvxOtGMYCoqif4qjv"><span class="mock-dot" data-page-node-id="XGkDI9GZHl9OSTw0GBjTb5"></span><span class="mock-dot" data-page-node-id="OQtuBOX6xDOUM6sNsqEdbq"></span><span class="mock-dot" data-page-node-id="pxzIvvcTGrZoGRGItHjDCx"></span><span style="margin-left:6px" data-page-node-id="et09HHQM90sNVp0kynQRbv">github.com</span></div>
+  <div class="mock-row" data-page-node-id="my8FM4rl0kIs15xkmV86b2">
+    <span class="pin" data-page-node-id="oi0eA1212gMfv69yE8lhp4">1</span><span data-page-node-id="6qzQ6eY4H7hmbsBHwIN1gl">GitHub 图标</span>
+    <span style="color:var(--text-dim)" data-page-node-id="H7QNYKIwnrSvLYIotsbhsM">= 回首页</span>
+    <span class="spacer" data-page-node-id="FmXvsicBNjjF8c8E3TkUU9"></span>
+    <span class="pin" data-page-node-id="kVNpcxoiG9yoTvQ4fVBo7N">2</span><span data-page-node-id="YRPG1pLi39UUT1EyyTIF5E">搜索框</span>
+    <span class="spacer" data-page-node-id="2IVABJ3fTFe0aJNvkao4WZ"></span>
+    <span class="pin" data-page-node-id="Aakin5yWnRJht0rGhuXsTn">3</span><span style="border:1px solid var(--line-strong);border-radius:5px;padding:0 7px" data-page-node-id="dgj6EELOg6RdKaGaQ6f73q">+</span>
+    <span class="pin" data-page-node-id="YLQuWLbvq6Jn7Jx6fPwSvt">4</span><span data-page-node-id="MGwsCzX80R3lgCNTJQ592o">铃铛</span>
+    <span class="pin" data-page-node-id="us1yF5QvWm41Hzgsfbg3gL">5</span><span style="width:22px;height:22px;border-radius:50%;background:var(--line-strong);display:inline-block" data-page-node-id="DmNNBocaFGCs2bRLeEgeZy"></span>
+  </div>
+</div>
+
+<div class="legend" data-page-node-id="wruN89yvw2UcArpd5veVAN">
+  <div data-page-node-id="vyMdRWegmT8DNdEHqFPwfa"><span class="pin" data-page-node-id="T9INL84yJNcNmq0TqHZBwL">1</span><div data-page-node-id="H4XSjdD4RIc3d2HviGPu7M"><b data-page-node-id="kLxLPD4XXtnJcfc4bsHvZb">GitHub 图标 / 首页</b>：回到你的动态首页，看到关注的人的更新。</div></div>
+  <div data-page-node-id="0clR6k82JSjhMUfgz4S9hm"><span class="pin" data-page-node-id="ykg9tamr7t9aEBEj0psf8c">2</span><div data-page-node-id="K8JIahnue7XHaP3DG2ELrF"><b data-page-node-id="xIUaYIrpI6lrypJvQa8BDQ">搜索框</b>：搜仓库、搜人、搜代码。前面加 <code data-page-node-id="EDUUsXdEweU7X7ghXEDArG">user:用户名</code> 可以只搜某个人的仓库。</div></div>
+  <div data-page-node-id="qM8tlxRYkjszTd4pVCGkSl"><span class="pin" data-page-node-id="7Dkbq50LwaIZD5uK40U3BW">3</span><div data-page-node-id="RsLI2JZaEy1HbBfhXSCVNo"><b data-page-node-id="Ne6xWT94geb6oJ6ltxFivk">加号</b>（最重要）：<code data-page-node-id="BPBVbZwllG4G8FAChWFfOz">New repository</code> 建新仓库、<code data-page-node-id="LDPgKzFG2WzZcopBiu7Hj3">New gist</code> 存代码片段、<code data-page-node-id="50BP43rhCKG5yFI3YGZ2WF">New organization</code> 建团队、<code data-page-node-id="eww8bp49ygnSVBhHsRg0Tu">Import repository</code> 从别处搬仓库。</div></div>
+  <div data-page-node-id="9DxOwpYMVwp6yfuAoFFdd7"><span class="pin" data-page-node-id="KnJoJZlcE2Oj87DXzQBnwB">4</span><div data-page-node-id="rT9TG8BKbyGb6cI0AddBRX"><b data-page-node-id="xwd5CIqB4PEMgjTjD1Gdos">通知</b>：有人给你的仓库点星、提问题、评论时会提醒。</div></div>
+  <div data-page-node-id="DmCZT1oKSTTeE8wBoQ8RzD"><span class="pin" data-page-node-id="ZDrNfgj7qtd2dCpBG92SVo">5</span><div data-page-node-id="Kz2HmcABVhkrMh67BtJi3n"><b data-page-node-id="VeLReB0X20rrzu9Yd8h0YG">头像</b>：点开是 <code data-page-node-id="iN2aPB4QCGi0tdC5MyWdI1">Your profile</code>（个人主页）、<code data-page-node-id="5PEH1JkW3Er6Bn9K8rJuKY">Your repositories</code>（我的仓库）、<code data-page-node-id="gMWTuSJ4rvxjL7NCwHBxWu">Your projects</code>、<code data-page-node-id="gjeOh4YyfPpRJLiwACCPSg">Settings</code>（账号设置，改密码 / 删仓库 / 生成 token 都在这）、<code data-page-node-id="AyQvOs40yXRDqUZGP8vA2i">Sign out</code>。</div></div>
+</div>
+
+<h3 id="q1-2" data-page-node-id="6BG1SFB8GultLilpBuzMmJ">1.2 个人主页（<code data-page-node-id="CHJFaJYWPPXZanE5IrdKwM">github.com/你的用户名</code>）</h3>
+
+<p data-page-node-id="LEIyOreSxbhaOYBn09m5FL">这是别人点进你头像看到的页面 —— <strong data-page-node-id="VyFOusNBzBc0kcPCjLlKC5">它其实就是你的作品集首页</strong>，面试官大概率会看这里。</p>
+
+<table data-page-node-id="vcyDRhg21FRc2T4kg8dg48">
+<tr data-page-node-id="Lu5K10H9jD9zCOExL9oWoz"><th style="width:150px" data-page-node-id="mlHFlk0RsCA9hy3YdFGPq4">区域</th><th data-page-node-id="7n7ILZfWGPFqIAE8T3RCWC">是什么</th><th data-page-node-id="esuuzCYn45dApMVWOXIRNP">你要不要管</th></tr>
+<tr data-page-node-id="CRij32ioctTbmdDnLzqbxR"><td data-page-node-id="uxXiywksAIO9dohlxuPT3I">头像 + 昵称 + bio</td><td data-page-node-id="ikG4zbHATdhsq2vnnFTJwY">一句话自我介绍，支持 emoji 和链接</td><td data-page-node-id="pzt6SInBEAhXeFeIG4L8xZ"><b data-page-node-id="qkjwrfOOfViY3TGlRMUtVM">要填</b>。写清身份和方向，比如「2027 届 · 在做 AI 内容质量与数据策略」</td></tr>
+<tr data-page-node-id="LxswOKezLBVwL6FxLLkL9a"><td data-page-node-id="1PsXyeGwKshWoQNb5oy33W">Pinned（置顶仓库）</td><td data-page-node-id="WVSOrFmalACdPR6IKbqif6">你手动挑出来展示的仓库，最多 6 个</td><td data-page-node-id="bki9LhIqFDSTgcvgDCk5YE"><b data-page-node-id="0hvoiKKgdifCirhsPi46ck">要设</b>。把好项目置顶，别让仓库按时间乱排</td></tr>
+<tr data-page-node-id="0plIwBImUwGSctifI28MzS"><td data-page-node-id="sjzuRf4obkOa31Ap6H1mQm">贡献热力图</td><td data-page-node-id="xHPQRIDGsNLpj6XFCgVNPJ">绿格子，记录你每天提交了多少次</td><td data-page-node-id="LEpNlN6wSNNjCoLecN2QKV">不用刻意刷，但保持有更新比全灰好看</td></tr>
+<tr data-page-node-id="lACiliuRIfSICaVHjGhTEn"><td data-page-node-id="iGYzKNBzxLQlbNZPkSsue2">顶部标签页</td><td data-page-node-id="XiRFkh5xyVaDonE6TV92VI">Overview / Repositories / Projects / Packages / Stars</td><td data-page-node-id="8Aswy3SJExOw5U7VSGBuT1">找仓库去 Repositories</td></tr>
+</table>
+
+<div class="callout" data-page-node-id="F74LHFXH1vXCtV8w1ajFmi">
+<p data-page-node-id="yMsnrtnxssbMPny4aXjh6t"><strong data-page-node-id="vJGOOqAXi511dKjphBOTsA">顺手做两件事：</strong>① 在 <code data-page-node-id="rQGZrg0uYUfHH0cBmAGDGJ">Your repositories</code> 里点仓库右边的星标旁边的小齿轮可以设 Pinned；② 头像旁边点 <code data-page-node-id="yRUwOst4F2vOoSSdIysGDG">Edit profile</code> 填 bio 和个人网站（可以把你那个工具链接填进去）。</p>
+</div>
+
+<h3 id="q1-3" data-page-node-id="mb28mlmjaxB9ejv4SdMEeU">1.3 仓库页面（你 90% 的时间待在这里）</h3>
+
+<div class="mock" data-page-node-id="hlrUqc8wRBCinBH5ZNAaxU">
+  <div class="mock-bar" data-page-node-id="GVfRf1FEsMIWF58hgtxR7G">
+    <span class="pin" data-page-node-id="1LvGQiouJV2B0yBUX5jl1b">1</span><span data-page-node-id="fwDj6DZcDPxC3VupeIVo8B"><b data-page-node-id="7CBESKDZSSdjVelJmNvjDe">用户名 / 仓库名</b></span>
+    <span class="spacer" data-page-node-id="CAHuZFJoRZE21Xi1UL1ZdU"></span>
+    <span class="mock-btn" data-page-node-id="vFzXqQgiaEXHGgA0XZ7wwT">Watch</span><span class="mock-btn" data-page-node-id="GC86qrIRORyx8ptujQzlkj">Fork</span><span class="mock-btn" data-page-node-id="1i4aqNoeEGYwEIcnipllZE">Star</span>
+  </div>
+  <div class="mock-tabs" data-page-node-id="sNf4UBCZgY7LdEBo7qAEwy">
+    <span class="on" data-page-node-id="J907sonCXttjcs7qWhzJZS">Code</span><span data-page-node-id="BUJTa47InU3YLlaist2aiS">Issues</span><span data-page-node-id="LMjBljwMVLoHFyZXC3NKSp">Pull requests</span><span data-page-node-id="vTlegopPUV5ntmoQApNtFA">Actions</span><span data-page-node-id="zH0YMZmP98RBAnCef7xnaF">Projects</span><span data-page-node-id="RSFBjTAWc1XcubaeY7GX8O">Wiki</span><span data-page-node-id="oOE5Viq8eErHWn2sPsQEVn">Security</span><span data-page-node-id="cDLADH43hX8yhKcASZ5Gir">Insights</span><span style="margin-left:auto" data-page-node-id="jnqqf6cb922HFOKbT0gUiN">Settings</span>
+  </div>
+  <div class="mock-2col" data-page-node-id="ZQHIvAEoC9JkRrDdnZyxmp">
+    <div class="l" data-page-node-id="mnB1tjErO2yHrV4RuNOpD8">
+      <div class="mock-row" style="background:var(--bg-soft)" data-page-node-id="lVraKV5ykBu6uXNe0FBh0t">
+        <span class="pin g" data-page-node-id="fOffzArTwyyCuojVv3eBJV">2</span><span class="mock-btn" data-page-node-id="dMPHsjN3CLPz08BH2FezJ5">main</span>
+        <span style="color:var(--text-dim);font-size:12px" data-page-node-id="I0WhjbWS09tGqyTx5ylLXW">1 Branch · 0 Tags</span>
+        <span class="spacer" data-page-node-id="5RAiOmxELlNjELMgygKvUL"></span>
+        <span class="pin g" data-page-node-id="0QwfrjWZwxS2fssSOyrlvu">3</span><span class="mock-btn" data-page-node-id="wolTypYY5XRsZuyRuR5NmZ">Add file</span><span class="mock-btn green" data-page-node-id="lq4S2Ga9eDRQ1aS6DE5pug">&lt;&gt; Code</span>
+      </div>
+      <div class="mock-file" data-page-node-id="Z7wWgAOsCYTEXASHRKfYa4"><span data-page-node-id="uaWzgqY5Hs3M6EwzORCAoj"><span class="pin" data-page-node-id="M3OxHEeIjBR3teD4UpCIFq">4</span> index.html</span><span class="r" data-page-node-id="5L5fR6C1J8qDp0qiDp8c9v">最近一次提交说明 · 2 分钟前</span></div>
+      <div class="mock-file" data-page-node-id="ZtUxKXmZEl2KVImzR0lEGl"><span data-page-node-id="txKT9SOkr5efX7dpOwOD5v">README.md</span><span class="r" data-page-node-id="3UhcYrtsb0lHhkYi5Cd7h1">发布工具 · 1 小时前</span></div>
+      <div class="mock-file" data-page-node-id="z7O9utSTV0a3hbCRWcaQMU"><span data-page-node-id="QDwjdu6COmwypr49FCZRPg">.gitignore</span><span class="r" data-page-node-id="v5BbMUc1WlrdRZAwj5umOD">发布工具 · 1 小时前</span></div>
+      <div style="padding:16px;color:var(--text-dim);font-size:12.5px;border-top:1px solid var(--line)" data-page-node-id="LMWAunLSBGEqmR2aK0UNtW"><span class="pin" data-page-node-id="EDNifA6Ti0fM0zCBL4n68F">5</span> 下面是 README.md 渲染出来的效果（仓库首页的说明文档）</div>
+    </div>
+    <div class="r" data-page-node-id="TrEC6KTq40VDm4k22aY4k1">
+      <div class="mock-side" data-page-node-id="1grn92BJ8Dqaz5GaUp6AHj"><b data-page-node-id="o73hF1gn32KXSfQzroRcyv">About</b><br data-page-node-id="LEhlOnlVV6MMjwJqnjp4CS"><span style="color:var(--text-dim)" data-page-node-id="frQqOo6aekn53NMpCb527s">仓库描述、话题标签、链接</span></div>
+      <div class="mock-side" data-page-node-id="d9J4PQHHHWHU0SY6i6BtAa"><span class="pin" data-page-node-id="rpNYcjj8LbWDSyXmQZ3rLx">6</span> <b data-page-node-id="ZAlg7sH9OlODjmydunPHLm">Releases</b> <span style="color:var(--text-dim)" data-page-node-id="hOrfisEcG8q2ApnoCrzm74">版本包</span></div>
+      <div class="mock-side" data-page-node-id="EQbLpAgiIqxEKJ9N7pLd5X"><b data-page-node-id="5LMVByQ0p4IybdUEY8646c">Languages</b><br data-page-node-id="Sk7Np5qQPxJXOF7RIBIErl"><span style="color:var(--text-dim)" data-page-node-id="AuAgB4LYxRfgIPePM9gGxl">语言占比条</span></div>
+      <div class="mock-side" data-page-node-id="1E1aGO28gAPHEtFjs4brK4"><b data-page-node-id="BbSW7GnpYEUBim6rNF5tB0">Contributors</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="legend" data-page-node-id="2AE8u6C9mfyK7KdyrVxoLL">
+  <div data-page-node-id="V8vQQ38RRh0Wh6ppPk7D3x"><span class="pin" data-page-node-id="JwaslnCAAGA9TOyLOcDnn7">1</span><div data-page-node-id="eBpKRPin9Uf2UDmjtLnfX3"><b data-page-node-id="tMbCiOFCc7TQaMckcb12Vo">面包屑</b>：<code data-page-node-id="BU0sfqDKSX7f1AUOFBwp3R">用户名 / 仓库名</code>。链接里这两段直接决定你的 Pages 地址。</div></div>
+  <div data-page-node-id="stqHtGfwccoSX9llPWM6G4"><span class="pin g" data-page-node-id="6M4ad853wvGFqMxiKUcPtX">2</span><div data-page-node-id="1Gcu99kDmvHhoIetWH93bI"><b data-page-node-id="cOPZsrMs1ZAbmkn3JB3DnY">分支选择器</b>：显示 <code data-page-node-id="dK6ZzOVdKWf0LYW1KiEle8">main</code> 就对了。新手不用碰它。</div></div>
+  <div data-page-node-id="tk3eoxZwFoQdSi6WtycdvT"><span class="pin g" data-page-node-id="nw8Un5RC3Lxj0SYOCpUPB0">3</span><div data-page-node-id="ffCwD10SDlFUh1t7HEm2gf"><b data-page-node-id="nPGkJuTkeDrolcYQ0J0Byj">Add file</b>：上传文件 / 新建文件。<b data-page-node-id="ECVtPBhwDyhMopCPpXkthC">绿色 Code 按钮</b>：下载或克隆仓库的地址（命令行方式要用）。</div></div>
+  <div data-page-node-id="HfpVQbKFeZuOMOFGZiGD4f"><span class="pin" data-page-node-id="BbFAsV5owuTvJLMtmcNVw0">4</span><div data-page-node-id="7l62qXEsJGC1bCIUC621lN"><b data-page-node-id="IpAXWmsT1tvsQpZBsrUrEQ">文件列表</b>：右边灰字是「最后一次改这个文件的提交说明 + 时间」。点文件名进详情页。</div></div>
+  <div data-page-node-id="najnW2gfzBCkRaOX8sJtnE"><span class="pin" data-page-node-id="iYvhvq3VS6DPIomXeO1nTc">5</span><div data-page-node-id="EXWZtimIilmnOA3wK4Xktx"><b data-page-node-id="quZD3eEub3k49taGpXdaon">README 渲染区</b>：仓库的说明书，写在 <code data-page-node-id="TDppu7XEUaW7eNoS0587y9">README.md</code> 里，会自动显示在文件列表下方。<b data-page-node-id="CEFKxVoHL5ASdHgJgIyhE0">这是别人判断你项目好不好的第一眼。</b></div></div>
+  <div data-page-node-id="WdccdaXLyhzbB5dCdDnyMv"><span class="pin" data-page-node-id="VcSkLMkiahW2tsDjdGcfYc">6</span><div data-page-node-id="icB7VAGq0njI7IOjylKlBa"><b data-page-node-id="ygOk8XCFruFqMMlGX6kcnU">Releases</b>：给某个版本打个包发布（比如「v1.0 可下载离线版」）。做工具分发时很有用，别人不用读代码，直接下载。</div></div>
+</div>
+
+<h4 data-page-node-id="LjAwxfpiZFmBc9PyC5rtV8">顶部那些标签页分别是干嘛的</h4>
+
+<table data-page-node-id="aAuL5Ho17NjP9LbwWKMwdm">
+<tr data-page-node-id="IuHewwfq4TXgK7qkwNbOQF"><th style="width:130px" data-page-node-id="i5XAEdHzK0SGfNZkFntCPg">标签</th><th data-page-node-id="QJTiGNaVE7NKsYnNsoTkSm">是什么</th><th data-page-node-id="fnTajSb1GEtiev9ju5DZu3">你用得上吗</th></tr>
+<tr data-page-node-id="2ZefPfnHxnyKoGRoHqxSiu"><td data-page-node-id="RjnRaLpSIZdTDmKbe9LQzw"><b data-page-node-id="Gu1d9PHAfPN9tG2U9Ckl2k">Code</b></td><td data-page-node-id="xx8g94cFsAaOlYOIAXRABd">仓库文件和说明，默认页</td><td data-page-node-id="zgKBOc1ZItYk4LkY9Jv7I1">天天用</td></tr>
+<tr data-page-node-id="vCvlT6q2fEaFV2z2EHmV2M"><td data-page-node-id="d5yujD15LKK13hU2DsLPwe"><b data-page-node-id="mjURewXb6VPzqZaOpgKlfy">Issues</b></td><td data-page-node-id="ZnvAMuiv2fyjc2PADCizMV">问题清单。别人发现 bug 在这里提，也可以当自己的待办清单用</td><td data-page-node-id="wczNsYvsZd3G6qkVhDamx6">偶尔用。可以给自己记「下一步要加的功能」</td></tr>
+<tr data-page-node-id="7HhADV1cBJrZAmpqGmbyC7"><td data-page-node-id="vYQ1KIJsoBRT0CsMeFOuiQ"><b data-page-node-id="1YDhtBzV6sczlFZHlCHLOf">Pull requests</b></td><td data-page-node-id="Fbh2Gy34qyREmCoB5HXzBO">合并请求。你改了代码想并回主分支时走这里</td><td data-page-node-id="rDSJjPIfK68xUwCYLhfMNe">一个人开发基本用不上</td></tr>
+<tr data-page-node-id="1mLPDt4hT2lsf1Z1m5FveY"><td data-page-node-id="L2FAyjuZOrbkhcsV4PX7ef"><b data-page-node-id="VEjsTH2j3HtbvUEagwKz7v">Actions</b></td><td data-page-node-id="RaFf9mwHD8ibaCPOMmko7G">自动化流水线：每次提交自动跑测试、自动部署</td><td data-page-node-id="dnMe4uqUuStTN22H1uhkob">暂时用不上。它是 Pages 背后的部署引擎，可以在这里看部署是否成功</td></tr>
+<tr data-page-node-id="UxzRJrExO8NEbvCoZ7ohGD"><td data-page-node-id="XiaO9nAiLPPsxv3GLFlc5O"><b data-page-node-id="7aHMYGAlGCMU1t6FDMsdHc">Projects</b></td><td data-page-node-id="tB4pWkc0nfbccaLqAdBzk2">看板，管任务进度</td><td data-page-node-id="8KMk77Yt9DitnsUKrBtxlm">用不上</td></tr>
+<tr data-page-node-id="2FjBGolohMwdoP7kkLyi5s"><td data-page-node-id="xlJZx0k2NBSrRUEFjwIB9W"><b data-page-node-id="5llw5Y0IWedDQJAvOau4u5">Wiki</b></td><td data-page-node-id="ih1GJJnXH8GIlFyigW8k83">项目的长篇文档</td><td data-page-node-id="Lsgus1W7iA9p7UMcwFSSxP">用不上</td></tr>
+<tr data-page-node-id="xvqoCgqDCzFCHQio61Z3OY"><td data-page-node-id="xx9itkCbMVHKAIr6CvWto9"><b data-page-node-id="ginbtQNC91RFGxOKiU8Akw">Security</b></td><td data-page-node-id="xLRZQzzQzMrHCYlxSY829D">依赖漏洞提醒</td><td data-page-node-id="dB3Tfhs63d3p8K7HinUna3">用不上</td></tr>
+<tr data-page-node-id="IGEYFRZUUP8hDrcZBNbgDW"><td data-page-node-id="c6DGwFEGdYoihItuSnAZWO"><b data-page-node-id="uRPCHMtFi2Ov0fc9KRxe0t">Insights</b></td><td data-page-node-id="kyR5mFQgTrKPWx5qdPaJWS">统计：提交量、访问量、贡献者</td><td data-page-node-id="A02X0WkVsAqtvFoGqmX7hK">好奇时可以看看访问数据</td></tr>
+<tr data-page-node-id="1Vw2Z81eLfZDJPCfdjBhwL"><td data-page-node-id="kv0a4z5mwCEmMQCrAczLYM"><b data-page-node-id="aPcX64JxprWcUy1nVXU1Ze">Settings</b></td><td data-page-node-id="s2UCgIG42vlw5zxSqwEJ5Y">仓库设置。<b data-page-node-id="r69TEMlkvy9M47wMGl9Q2z">开 Pages 就在这里</b>，改名、删仓库、改可见性也在这</td><td data-page-node-id="vf2EC8eWHQGUxUpStT97G2">今天就要用</td></tr>
+</table>
+
+<h3 id="q1-4" data-page-node-id="YjDGnpiLbYT37T4WccXvhw">1.4 文件页面</h3>
+
+<p data-page-node-id="Ti6tQTCR5593HsKz5m8qo5">点开某个文件后，右上角有一排按钮：<code data-page-node-id="bHWHgCsbNMvIOnwZozMRGc">Raw</code>（看纯文本原始内容）、<code data-page-node-id="AF3hJOeoRBoPyCfXjfMSKq">Copy</code>（复制全文）、<code data-page-node-id="uaE9RpDBvogC8XWDeqCb6D">Download</code>（下载）、<strong data-page-node-id="6HGmggwKAyk2ZfmFnpt11C">铅笔图标</strong>（在线编辑，改完直接提交）、<strong data-page-node-id="FeHwy7F6d1MVusqXRObE6p">垃圾桶图标</strong>（删除这个文件）。</p>
+
+<div class="callout" data-page-node-id="WffPCPJ2GfmN7A3KTya93K">
+<p data-page-node-id="iPVCHOmagbM4Pe0yvzQ3OJ"><strong data-page-node-id="ug76WxlMUutslsFtFr60vD">改 README 就用铅笔。</strong>改完拉到页面最下面，填一句说明（Commit message），点 <code data-page-node-id="mgxNChifW3M7hNWbBYO5Fz">Commit changes</code> 就存好了，不用下载再上传。</p>
+</div>
+
+<h2 id="q2" data-page-node-id="qtpB3BAjFggeAmkt0GoX2i">2. 名词白话解释</h2>
+
+<table data-page-node-id="djcyIoa8Tml1LiKCajCoEW">
+<tr data-page-node-id="U5O6FeTd59s8W96yWdihf3"><th style="width:130px" data-page-node-id="4XH4zZmsT4H4R168pZyEYK">名词</th><th data-page-node-id="tRWqjebJzf0QHOg8WBFwgb">白话</th><th data-page-node-id="dhbL0Ac9Et8GSPBKQ0AEBv">你要关心吗</th></tr>
+<tr data-page-node-id="TCd2KrXl8JCNpWTF775cSy"><td data-page-node-id="eCM08fvKQeF2UXuH79NGe9"><b data-page-node-id="tnMeVtoCXLLq6M7Eu5OxZW">仓库 Repository</b></td><td data-page-node-id="5cayTauOXxJa3jyqK07v8q">一个项目一个文件夹，只是这个文件夹住在网上、有历史记录</td><td data-page-node-id="WWGG8vDR699iRPFXmG9ulb">核心概念</td></tr>
+<tr data-page-node-id="PZLENk27pPZnrPrbjuDtXL"><td data-page-node-id="bPGpcsnTsyLtoPP56lngaQ"><b data-page-node-id="1Cup81emXt565AiFqAr53R">提交 Commit</b></td><td data-page-node-id="WXhmmRkE2xRASeLSWmdygG">一次存档。附带一句话说明你改了什么，可以随时回到任何一次存档</td><td data-page-node-id="pumnj3JPCR9UuHIDqcGUsV">核心概念</td></tr>
+<tr data-page-node-id="Stf5NXokZBGgKEHXkuAZ4t"><td data-page-node-id="lbC7Hv5neLCtJ0ODZiE6IL"><b data-page-node-id="zG40hUYc5FALBKoOez3pK3">分支 Branch</b></td><td data-page-node-id="KrJlFmhDkNjcpXXiylDrli">平行时间线。默认那条叫 <code data-page-node-id="j6Hheq9ezWACmBpkCVGqWA">main</code>，是正式版</td><td data-page-node-id="Za2KHDKjgOexUltyJcx0P2">知道有 <code data-page-node-id="UkJGF4eF6X0G44DyZkG4yS">main</code> 就够了</td></tr>
+<tr data-page-node-id="3t3bqJ5M6tdJmh47e6iR3N"><td data-page-node-id="GCzXwMqrejwhXhQMAcCgVk"><b data-page-node-id="uPrRmbpEVloNJ7WXPjhqZ3">推送 Push / 拉取 Pull</b></td><td data-page-node-id="ClvULxo1gdzZBKfY00cy07">把本地存档上传 / 把网上的更新下载下来</td><td data-page-node-id="UTzCUPvf444T3GaWyr7c8K">命令行方式才用</td></tr>
+<tr data-page-node-id="eGgFWpR3lljFhzpLQZq6R8"><td data-page-node-id="5hCecWUfWIMtrPGqhMtjZA"><b data-page-node-id="KRnNQ9LUbAT2TrOLY0nZGt">克隆 Clone</b></td><td data-page-node-id="kWukM0QeEV9tTwKCIrmaLr">把网上的仓库整个下载到本地</td><td data-page-node-id="abybk97EmNftTAiUsbuaVv">换电脑时有用</td></tr>
+<tr data-page-node-id="ejDQGPyXhRGPNNLMbRAxmF"><td data-page-node-id="9myEquAyvRkcAp5lgQcydh"><b data-page-node-id="txzsf75g4DIHDdrVHBMxPU">Fork</b></td><td data-page-node-id="whYtHNY6xKH5lRnTnteHqm">把别人的仓库复制一份到自己账号下</td><td data-page-node-id="Hon2ttjqIz9BoVDhgHyupy">暂时不用</td></tr>
+<tr data-page-node-id="EsTL0NFRx0sNuqbxn4DTNp"><td data-page-node-id="kgQD2B8hrvPKbFUVOkoFcG"><b data-page-node-id="zQC2zxzEiwSM1uzZNTGzfb">Star</b></td><td data-page-node-id="IrdDNcCWp0AoxQhUMsJsHY">收藏 + 点赞。别人点星代表认可</td><td data-page-node-id="3eIKYGiIQ3QtKj8yb4g9ZO">你的仓库被点星是简历素材</td></tr>
+<tr data-page-node-id="w5NQ6NZTRAwDoLHfUClCGj"><td data-page-node-id="EWfqYjRSPznw0xYUCCU9an"><b data-page-node-id="dZrksG861aKslAdbnGMRpW">Issue</b></td><td data-page-node-id="js8rScQHASsredACwDcuiX">一个问题 / 一条待办</td><td data-page-node-id="UGk7JKmgqOhKJJq0zVHJAK">可以当自己的需求清单</td></tr>
+<tr data-page-node-id="YUFozzJQ5YYrMkKrRTMx0T"><td data-page-node-id="EvltJFZZgLDcUiwSBVUZzH"><b data-page-node-id="hVRS7FiCCEHUCkzEMT2O37">Release</b></td><td data-page-node-id="HpfK5HfO5TsbOEX4J6C7DX">打包发布一个版本</td><td data-page-node-id="n26xUUNRvahjhQQrQ5qf8E">工具成熟后可以做</td></tr>
+<tr data-page-node-id="XqO7orjoWaUplZfvmvGU4f"><td data-page-node-id="FyRdPOJ8nF2XPoZIhRVsSQ"><b data-page-node-id="AAPtgfoKXLksCUhrOYGCmp">Pages</b></td><td data-page-node-id="5h1HciK78FLHFnsBwKxUuv">GitHub 免费提供的静态网页托管 —— <b data-page-node-id="C9LAEwSQebUQS2u1q39QW5">把仓库变成一个能打开的网址</b></td><td data-page-node-id="1jiynWKZONa5TIq7UW6TS2">本次目标</td></tr>
+<tr data-page-node-id="oh2yHOJ91seDcDw6EpmTUG"><td data-page-node-id="CgXuTNno3qjZ0CSaZSrYpx"><b data-page-node-id="zfoBu90lZMPjwi0I8pZzhY">README.md</b></td><td data-page-node-id="WaJHO83j4mJ6f7caDlQBS9">仓库说明书，用 Markdown 写，自动显示在首页</td><td data-page-node-id="f8w3698CodJT587xa3gtkx">必写</td></tr>
+<tr data-page-node-id="cePF5Qw60P4244JNEqgbR3"><td data-page-node-id="qqw1LGaSrEEfuffYTl0T3W"><b data-page-node-id="mBjwPglzBUcXdFCBvMHjen">.gitignore</b></td><td data-page-node-id="goCYToc4Ajt5YEDyxKa3Aj">黑名单，列出不上传的文件（如系统垃圾文件、密钥）</td><td data-page-node-id="oEydfX3V9tJsRVs2F6F8n1">有则更好</td></tr>
+<tr data-page-node-id="X8B481eBzjZF291BZc0bGm"><td data-page-node-id="HG8Vj74TjvmFdS2fr3CJvO"><b data-page-node-id="IAlsSmk0RUlitUv5qQp9f0">LICENSE</b></td><td data-page-node-id="yZTGDrdaFJ9GqimKo8d1Zn">开源协议。没有的话默认是「保留所有权利」，别人不能随便用</td><td data-page-node-id="DuP5jfVpHaB3LbKL54uMuz">想被人用就加 MIT</td></tr>
+</table>
+
+<h2 id="q3" data-page-node-id="5Qg6q6BksCeWy3lVYSkVD2">3. 上传你的小工具：完整流程</h2>
+
+<p data-page-node-id="3QiD1nDZ5mqSQAd2NNO33G">下面以你的论文格式校验工具为例，仓库名统一用 <code data-page-node-id="BQ3C4XuAIccHq1D70MWOjw">thesis-format-checker</code>，需要上传的文件在：</p>
+
+<pre data-page-node-id="F0kAIDhyRvDPDOW5SMoNqq"><code data-page-node-id="VV8NbmyplmufJE3N0lzJFC">~/Desktop/github-pages/
+├── index.html    78 KB，工具本体
+├── README.md     说明书，已写好
+└── .gitignore</code></pre>
+
+<h3 id="q3-0" data-page-node-id="EIspqQuLtybTMcjb31GS9a">3.0 先决定走哪条路</h3>
+
+<table data-page-node-id="aSVBfdk6dMqkCLKZcmSPCf">
+<tr data-page-node-id="Fn6Bx1ulqi0BRKJJmRV5aU"><th style="width:120px" data-page-node-id="KJSyXSji75dAiJQxkfyXem">方式</th><th data-page-node-id="0anVLTW5e8kDXXlTMj6PV2">适合</th><th data-page-node-id="rAaCmXR3D476JnnvKmCuk9">要装东西吗</th><th data-page-node-id="iK1SOgOyWkFgDbAcVQVsDn">以后更新</th></tr>
+<tr data-page-node-id="4IPOFvyLYIaB0AgFIGaDMV"><td data-page-node-id="8wODqRuzhSNYGEW69XNDvq"><b data-page-node-id="C7qkh0OP4RuHyhCBhlq06u">网页法</b></td><td data-page-node-id="jMvjx7klvDYB1xlmv92dco">第一次上传、只想快点拿到链接</td><td data-page-node-id="hyoGHEDAMGjBTC66ZAXwkW">什么都不用装</td><td data-page-node-id="itBUgbbTQvUX30XrJqn0UC">每次手动删旧文件再传新的，稍麻烦</td></tr>
+<tr data-page-node-id="ySrqC3CBwRpAgkKVlnS58v"><td data-page-node-id="8AkR0yOghvDXjERXBWdJvk"><b data-page-node-id="I1hyjAsCQ8DbsnKV2eHOXi">命令行法</b></td><td data-page-node-id="mhbSSfJWuK0oKBHsIShOPb">会频繁改、想把仓库当正式项目维护</td><td data-page-node-id="53JFnsV2nWwle2aRykRnxb">本机已有 Git，再生成一个 token</td><td data-page-node-id="UTdUFqmzBFt3voB2IFqwG6">一条命令搞定</td></tr>
+</table>
+
+<div class="callout" data-page-node-id="fowTKmVHQsonria6wZ3k3x">
+<p data-page-node-id="W3KCOHog0wYpR5F96ESnBE"><strong data-page-node-id="m8Y4Ovf6bJmssr7OClrG2t">建议：</strong>今天先用网页法把链接拿到手（10 分钟）。等你确认要长期维护了，再补命令行方式。</p>
+</div>
+
+<h3 id="q3-1" data-page-node-id="ppF5jKUdMEHtVMsmlT9uxp">3.1 网页法（推荐，今天就用这个）</h3>
+
+<div class="step" data-page-node-id="ZkQWfdsnD5WAZBvDOZGT8M">
+<div class="step-h" data-page-node-id="XSMeWg0z5RpOryhAs0a70y"><div class="step-n" data-page-node-id="lCxpnjKdpdbpSab6FPF4gG">1</div><div class="step-t" data-page-node-id="CCACFqcPgTWjxFMChhGX6o">注册 / 登录</div></div>
+<p data-page-node-id="GtcFOfntoQdZFavc0CcwdT">打开 <code data-page-node-id="oZ6W6c5F0OmA0AHVGiZ3La">github.com</code> → 右上角 <code data-page-node-id="xVXqYq3QBGxgL2Nls3v4Bu">Sign up</code>。邮箱建议用常用邮箱，注册完会让你验证。</p>
+<div class="callout warn" data-page-node-id="SRemLn5IX1co9p8ZpSVrZB">
+<p data-page-node-id="Yr44beibCHCBhX8SyqQLuk"><strong data-page-node-id="k90UaMs0wwceUdju0g9FHJ">用户名要想清楚。</strong>它会永久出现在链接里：<code data-page-node-id="hKeBhLElMGJ49BZrunxPFP">https://用户名.github.io/仓库名/</code>。这个链接要进简历，建议用真名拼音，不要用 <code data-page-node-id="fSKV756fb1k97CwoTsfHca">coolboy2026</code> 这种。以后可以改名，但改名会让旧链接失效。</p>
+</div>
+</div>
+
+<div class="step" data-page-node-id="44G0c3UNf5ZPNu5AEtabvX">
+<div class="step-h" data-page-node-id="x3QkP930ONGZ46yL4ESPQK"><div class="step-n" data-page-node-id="1WLlTeZpRTvaSjTH7Jzc4j">2</div><div class="step-t" data-page-node-id="HrudzJiPEvfGYylDzJDCtX">新建仓库</div></div>
+<p data-page-node-id="Z8YMlHo0GpYTryHcYbyUQX">右上角 <code data-page-node-id="6rQSgLLnO6A46H4yOax6bC">+</code> → <code data-page-node-id="SFoadFrJyMrMEIFmC0ERvl">New repository</code>，按下面填：</p>
+<table data-page-node-id="j3qONb57qmiHeBKbaNJa8W">
+<tr data-page-node-id="pXMK15TtZQCNZiLNQs1lQI"><th style="width:190px" data-page-node-id="2JWvYhFNQW4lPpswrx3qVI">字段</th><th data-page-node-id="sB0gkWfC1lX3KITB1g35qf">填什么</th></tr>
+<tr data-page-node-id="28Bq7JGMVU4TnGbfeISIwf"><td data-page-node-id="n3neTWbDJNBBCIdmJBFs8j">Repository name</td><td data-page-node-id="KB4TfPZyJZFVJmjv85ZQ3o"><code data-page-node-id="iEBRb4VDaVGRAsWkt3D6aN">thesis-format-checker</code>（只能用小写字母、数字、短横线，不能有空格）</td></tr>
+<tr data-page-node-id="mtnMkmpiwe9NjKLSuNYrSK"><td data-page-node-id="59eBwL2JP7M21ecPVFD82B">Description</td><td data-page-node-id="SclEmussV7k1dT3Doy9QVf">一句话，比如「毕业论文格式校验工具，纯前端零依赖」</td></tr>
+<tr data-page-node-id="CbelWq90kIEm8XGlDGX7ts"><td data-page-node-id="cmuHBCAjqiJbBF84sYGxPl">Public / Private</td><td data-page-node-id="y8bbLJycmYQOrHLRjSqCSg"><b data-page-node-id="u6WAkHihPjbYe97B3vKwmz">选 Public</b>。免费账号只有公开仓库能免费用 Pages</td></tr>
+<tr data-page-node-id="YuTEQSoG0uTak5Cr41HKR8"><td data-page-node-id="jLmFy5e4ogLZaMazw2ZxW3">Add a README file</td><td data-page-node-id="zaZHrMNviVWqZUdd7Gxs91"><b data-page-node-id="OFO5lzz9rZJ8noGV5KIdBf">不勾</b>（我们已有 README）</td></tr>
+<tr data-page-node-id="OY4v3EBf4tPNfN559Xuyge"><td data-page-node-id="3LwCPR5X7XjzHODsQ9DH1u">Add .gitignore</td><td data-page-node-id="LrDDa0HkZ3QvSSDvGGNA7P">不勾（我们已有）</td></tr>
+<tr data-page-node-id="Ufl5bA8FGtss8fNuCQwSew"><td data-page-node-id="mnAb5yqTNwEBYVEWC86b6S">Choose a license</td><td data-page-node-id="ZrBrPxBldyxPA35ovZtWcz">可先不勾；想加就选 MIT</td></tr>
+</table>
+<p data-page-node-id="8F5IHEPlb8haVudpB0tgH2">点 <code data-page-node-id="AXhmQIiC0yioF1E7luK8Zn">Create repository</code>。</p>
+</div>
+
+<div class="step" data-page-node-id="zGdRcgZncluXX9V1T9XDxm">
+<div class="step-h" data-page-node-id="OQXUeALQNEuxknAGf5H94X"><div class="step-n" data-page-node-id="lJMqLIcFiDtvZoYEEL50Gp">3</div><div class="step-t" data-page-node-id="NEdl4qj7lfh8ltTrp0J9DN">上传文件</div></div>
+<span class="tagpath" data-page-node-id="KizLRRhlxGQrZxpC0OvEMq">方法：地址栏直接访问 https://github.com/你的用户名/thesis-format-checker/upload</span>
+<ol data-page-node-id="47QWU6RGQHxpSx1engCZqA">
+<li data-page-node-id="WniLvPY37f3RHPiZBLkvv2">把 <code data-page-node-id="JafoqwT6wlwf7xKg8uzKcF">github-pages</code> 文件夹里的 <code data-page-node-id="KEUluhImz16lMEW9Z57GIZ">index.html</code> 和 <code data-page-node-id="oee2bjLzhuaIJnzUi6TiKt">README.md</code> 拖进页面的虚线框（<code data-page-node-id="RglBav7kOIo64oYeJnoUz4">.gitignore</code> 可选）。</li>
+<li data-page-node-id="yDFY09q7PngVF5JkQ9SPra">下面的 <b data-page-node-id="Q46B1rnBmU0A9B7WADXGS1">Commit message</b> 填一句说明，比如 <code data-page-node-id="venukNge8nLjrsOfcILGI7">发布毕业论文格式校验工具</code>。</li>
+<li data-page-node-id="XJyXZvKVNGji3dQQOKBJca">确认选的是 <code data-page-node-id="L90s3qfbFjFWJWF8Vte3bN">Commit directly to the main branch</code>。</li>
+<li data-page-node-id="MyCmiKbzDBhyGiU0M5tsrB">点绿色 <code data-page-node-id="8cDT45IhcZR39yz09qdGLD">Commit changes</code>。</li>
+</ol>
+<div class="callout warn" data-page-node-id="JiTjTH9LPEavEnxD5QhPFm">
+<p data-page-node-id="k4E34GwKBTUBZLBcbUegxs"><b data-page-node-id="gRH1HAfIL9ejuR5AJXsUjP">看不到 .gitignore？</b>它是隐藏文件。在访达里按 <span class="kbd" data-page-node-id="eqLwLzB7MhgtO0jAsq6Ilj">Shift</span> + <span class="kbd" data-page-node-id="DHtvf8kXPZWNTP3J9WS463">Command</span> + <span class="kbd" data-page-node-id="WrjhvrE9NQN3HndG6W7HUq">.</span> 就能显示隐藏文件。传漏了也不影响工具运行，可以不管。</p>
+</div>
+<div class="callout bad" data-page-node-id="UL1hEMHc5I26sCFg571Xa5">
+<p data-page-node-id="ZbJR1JFmFAlTCS83hmAwjV"><b data-page-node-id="NP7g0V8gbG2Y0nNbIFYdZL">网页上传的限制：</b>单个文件别超过 25 MB（你的 index.html 只有 78 KB，远低于限制），一次别超过 100 个文件。</p>
+</div>
+</div>
+
+<div class="step" data-page-node-id="5zKXrQJm3lEZdG7BcqCf3Q">
+<div class="step-h" data-page-node-id="01bvg7WPiDVycD3FOrWbVh"><div class="step-n" data-page-node-id="StVQvJcbDjKhrVCC4uspwl">4</div><div class="step-t" data-page-node-id="OirHaGk8Wu0kudN8KyiEso">开启 GitHub Pages</div></div>
+<span class="tagpath" data-page-node-id="dd8fWwbUj1Y7LXHVoN11Ug">Settings → 左侧 Pages → Build and deployment</span>
+<ul data-page-node-id="Q76565t5UVYaqQPVaFT9c1">
+<li data-page-node-id="v6ICFZrKsVj0BXXGYFvtle"><b data-page-node-id="YafAQB8HT3RZMngt1w6W5W">Source</b>：选 <code data-page-node-id="bO0FzVHJh2JnQf4LIksOSK">Deploy from a branch</code></li>
+<li data-page-node-id="3pS0Q0np0hlBnoa8OepDnb"><b data-page-node-id="usidQcp7DP5wMM7Km24zOH">Branch</b>：左边选 <code data-page-node-id="X2tKoTKGPr35OLPHC0spgD">main</code>，右边选 <code data-page-node-id="eseERIfSSLuAFY3HJoBKMA">/ (root)</code></li>
+<li data-page-node-id="OOq5UsOGr7Y7mAqRWbjpFB">点 <code data-page-node-id="Rh3ZXRxgwiK0BHaG5jKjPm">Save</code></li>
+</ul>
+<p data-page-node-id="0iZ8PHaE3KfAEJHHfG94f9">注意：<code data-page-node-id="EAhlwIKV4xVMFLl0OpeCtH">Settings</code> 在仓库页面<strong data-page-node-id="xYpKzg6sUYNAnYdMRKrfrn">最上面一排标签的最右边</strong>，不是右上角的头像菜单里的 Settings（那是账号设置）。</p>
+</div>
+
+<div class="step" data-page-node-id="MLEJw1jJ8TnR8e90Hf8NiM">
+<div class="step-h" data-page-node-id="XcQqvoJoXNXq5VuysL2kiC"><div class="step-n" data-page-node-id="kczkA37blLtviy0v9EhtIv">5</div><div class="step-t" data-page-node-id="ACBF3vcC8AAGHJZMPpqZIC">等 1–3 分钟，访问链接</div></div>
+<pre data-page-node-id="4jpa7iG6JG3yIeTJhRTT1Y"><code data-page-node-id="OFnWlBdQFXb4zVW7odnHOs">https://你的用户名.github.io/thesis-format-checker/</code></pre>
+<ul data-page-node-id="C0bbD9qSjyupk5fvsUtbmQ">
+<li data-page-node-id="oUyVEVGWhX6JiKRgsu7quw">首次生效期间会显示 <b data-page-node-id="z0nhPq6Aj8TvhSIbnDpAF4">404，这是正常的</b>，等一两分钟再刷新。</li>
+<li data-page-node-id="MbDZEZdEju4jaOpluIGn80">想看部署进度：仓库顶部 <code data-page-node-id="3wYCylYraMzszpM9I6kNgH">Actions</code> 标签里，有个叫 <code data-page-node-id="PHyrvTQzycChjI7eH860OQ">pages build and deployment</code> 的任务，黄色圆点=正在跑，绿色对勾=成功。</li>
+<li data-page-node-id="HHWFDjDUOzwec5k4600Kia">Pages 设置页顶部出现 <code data-page-node-id="juwKroLmD7WstiAI1Ny4pF">Your site is live at ...</code> 就说明好了。</li>
+</ul>
+</div>
+
+<div class="step" data-page-node-id="0hQGkDmG0Fzi7kby6i6OsA">
+<div class="step-h" data-page-node-id="layvCHHYmZyGZksnkFncYz"><div class="step-n" data-page-node-id="LATHf1XvF2XGBhoPRk5GN2">6</div><div class="step-t" data-page-node-id="C5evWjtiNbdL9NPKnOuvha">回填 README 里的真实地址</div></div>
+<p data-page-node-id="GA6LB7dfMiHDKbzxAOELob">回到 <code data-page-node-id="k7Zf0jrb47PQeZaY3Rrm1G">Code</code> 页 → 点 <code data-page-node-id="NYDk4Q4cSJbkHL8Pi0JNFP">README.md</code> → 右上角<strong data-page-node-id="LSPtptO3IrTCp4woCfWe1m">铅笔</strong> → 把第 5 行那句占位链接换成真实地址 → 拉到底点 <code data-page-node-id="dAIAVBI9LS7mGVOlAtvvQs">Commit changes</code>。</p>
+</div>
+
+<div class="callout ok" data-page-node-id="OjF7Dd5LeVowhfWZb5DeOf">
+<p data-page-node-id="k0IUnBS5lL8rPu2Fw30g3d">到这里就结束了。你已经有一个永久链接、一个公开仓库、一份展示用的 README。</p>
+</div>
+
+<h3 id="q3-2" data-page-node-id="hgV0EGPADnpa0rIBrrMzDl">3.2 命令行法（以后频繁更新时用）</h3>
+
+<h4 data-page-node-id="NBBseHVveHqy5Ksd4fKgfs">第一步：生成 token（一次性）</h4>
+<p data-page-node-id="TsrMNazAkQSLga8VxqlugH">GitHub 早已不支持用密码推送，必须用 token 当密码。</p>
+<ol data-page-node-id="oXQYJF1kjK6oc2ukT3LmN3">
+<li data-page-node-id="TErPCkR15s5hrjaMJUsMR9">右上角头像 → <code data-page-node-id="gp2VWBERjcxHniCR4GrfTt">Settings</code>（这个是<b data-page-node-id="cyB3km9ykFEiPOxDfhYRZ8">账号</b>设置）</li>
+<li data-page-node-id="w0BVPsIUodyKrmUoYAHLid">左侧最下面 <code data-page-node-id="3tnL0PiXLG5KQ4uJLhsTrx">Developer settings</code> → <code data-page-node-id="JxMb05B2NP5aMHqMyEbMzR">Personal access tokens</code> → <code data-page-node-id="DKBEP0Jg7wKOKesM1jSjrV">Tokens (classic)</code></li>
+<li data-page-node-id="Hr4O7AyAf5ufvUF1AVm47Q"><code data-page-node-id="V4DtzFM7bCz2C5cFeryeCo">Generate new token (classic)</code> → 备注随便填 → 勾选 <code data-page-node-id="Xo9I1cMx2Y22UTa8ET58Pj">repo</code> → 拉到底 <code data-page-node-id="iITjn9msbyDxbEOxXf58hL">Generate token</code></li>
+<li data-page-node-id="9cagk5PlBiav08356oC9VT"><b data-page-node-id="nJcSXjVSTE0HCJ52mLjVtY">复制那串 <code data-page-node-id="DoXmrPo1jeY4EFpuezNUW3">ghp_</code> 开头的字符，只显示这一次</b>，关掉页面就没了</li>
+</ol>
+
+<h4 data-page-node-id="IxBd1JoEP0qgdMQQCmpNyD">第二步：在本机跑这几条命令</h4>
+<pre data-page-node-id="4ltRYjpgyWmTG0QKgk3c3M"><code data-page-node-id="jK71QEta4fGrK7jXa8Zc6y"># 0) 先登记身份（只需做一次，你的机器目前还没配置）
+git config --global user.name "你的GitHub用户名"
+git config --global user.email "你注册GitHub用的邮箱"
+
+# 1) 进入工具目录
+cd ~/Desktop/github-pages
+
+# 2) 初始化仓库，把当前分支命名为 main
+git init -b main
+
+# 3) 先看看要提交哪些东西（确认没有密钥、大文件混进去）
+git status
+
+# 4) 全部加入暂存，然后提交
+git add .
+git commit -m "feat: 发布毕业论文格式校验工具"
+
+# 5) 关联远程仓库（把用户名和仓库名换成你自己的）
+git remote add origin https://github.com/你的用户名/thesis-format-checker.git
+
+# 6) 推送
+git push -u origin main</code></pre>
+
+<p data-page-node-id="R73Dv2YosYnHXRkD17UVWw">推送时提示输入密码 → <strong data-page-node-id="sa03zg6cIB4ERN7nFAervd">粘贴那个 token</strong>（不是你的 GitHub 登录密码）。终端里粘贴密码不会显示星号，直接回车就行。</p>
+
+<div class="callout warn" data-page-node-id="epZ5KHQP1LXuDm80k75Fea">
+<p data-page-node-id="vB6gAqPYjEukIWnr7Q72rR">第 5 步的前提：GitHub 上那个仓库<strong data-page-node-id="IwRCCaoDdGqCcPkG6vLXWk">必须是空的</strong>（建仓库时别勾 README）。如果远程已经有文件，<code data-page-node-id="4itKEHRwZZd446iZeBEsZU">push</code> 会被拒绝，见第 5 节报错表。</p>
+</div>
+
+
+<h2 id="q4" data-page-node-id="XLnlFbqO94mOCEqJsDFil6">4. 以后怎么更新工具</h2>
+
+<table data-page-node-id="WGMK6zbDDqbKqfAbwbWBSd">
+<tr data-page-node-id="4aua7p97VTS4AEEVcgnUfW"><th style="width:120px" data-page-node-id="qj1yh5SBrSPYFkD9Cq7g4H">场景</th><th data-page-node-id="eTcINDH8uVUD0tVGuf2jsK">网页法</th><th data-page-node-id="xMUflLnaKGrXmhTIgH2b6z">命令行法</th></tr>
+<tr data-page-node-id="elp19gBuAmqt5r90eC0rbj"><td data-page-node-id="4OZyLn7zMQjTxH2bNFdkoV">改了工具本体</td><td data-page-node-id="z3U4VWVmcgUUjv8OlMh4GM">进仓库点 <code data-page-node-id="Dozo0ngYSBVCu8LN4f6OZb">index.html</code> → 右上角垃圾桶 <b data-page-node-id="EOWlT2zmnBSCBbhs6I1vGR">Delete</b> → 再 <code data-page-node-id="Na2G1T7P16r83KKiysmFxG">Add file</code> → <code data-page-node-id="ToigM9qEKUwxnKq7xfbanD">Upload files</code> 传新版（文件名必须仍叫 index.html）</td><td data-page-node-id="WAXBjDkGAjw2VDgX93i1az">把新文件覆盖到 <code data-page-node-id="nZhmDhHwwpFgyuJqXgcbPu">github-pages/index.html</code>，然后 <code data-page-node-id="AWdAEM75MyEF428i8YPFYs">git add . &amp;&amp; git commit -m "fix: 修正标题字号误报" &amp;&amp; git push</code></td></tr>
+<tr data-page-node-id="WsuIY9zd7hKxd2ZcjGaPfs"><td data-page-node-id="5ZIMCFVDLxCEhV4q3Gzx0G">改 README 文字</td><td data-page-node-id="6cjEAEsKtImVMLfD2j9nIY">铅笔图标在线改，最方便</td><td data-page-node-id="1nrn6TYgM7pS8pUqbUVd2o">本地改完 push</td></tr>
+<tr data-page-node-id="TrDg0btIwPg49jI1j6iLY3"><td data-page-node-id="YUYVJqA6JC9Oay9xhF9XNg">加新文件</td><td data-page-node-id="4GJfQ0YYT8oH9WwJiGdTPV"><code data-page-node-id="vi2Q0PN2c1U2CVBK4WOxl7">Add file</code> → <code data-page-node-id="LetZgPCs0lN8XF4BN41YbX">Upload files</code></td><td data-page-node-id="cnS7LCWF422gYQhqDnLDeg">同上</td></tr>
+</table>
+
+<div class="callout" data-page-node-id="9KJvU8gkgPsSgSyYwYxBSE">
+<p data-page-node-id="h05vgHzjwdKs8EpeJPpgPV">改完 Pages <strong data-page-node-id="ijv4J7P8caSOsifsuAG7Hf">不用重新设置</strong>，1–2 分钟后自动生效。刷新时如果没变化，按 <span class="kbd" data-page-node-id="kOlPCTFbNCBUZxxVnqRWPC">Command</span> + <span class="kbd" data-page-node-id="EBr1yCsMRV4hudZGyX3DN4">Shift</span> + <span class="kbd" data-page-node-id="02yy37y8kFj0hi5SpnGJHm">R</span> 强制刷新（浏览器缓存）。</p>
+</div>
+
+<h2 id="q5" data-page-node-id="YVxAP3dGwWvk704Hi8BOny">5. 报错对照表</h2>
+
+<table data-page-node-id="Yqv1UNBn592HcShmtVRCgb">
+<tr data-page-node-id="YbtmrWALKGM1mc7NUm4JxO"><th style="width:270px" data-page-node-id="wcZ2oe0m8wyIu4ohZ3Mjdv">错误提示</th><th data-page-node-id="TIw0Go6Jda4zi1emWrC1TW">原因</th><th data-page-node-id="hCcdu0IQwGqwNBbgy8l9ua">怎么修</th></tr>
+<tr data-page-node-id="XslSaNFHAltD4r8z8jcC0a"><td data-page-node-id="hls0W66ZMLG6LBaPDiFa7N"><code data-page-node-id="WpqdInvkOF3klbXtV52BbV">failed to push some refs</code></td><td data-page-node-id="8v42sHKCQsQYYb4RRli7qK">远程有本地没有的文件（通常是建仓库时勾了 README）</td><td data-page-node-id="Y7aq10omvoNhwtP7g21sOZ">先 <code data-page-node-id="t6pKuq0Ld5y3bnpQSBxn6p">git pull --rebase origin main</code> 再 push；或者删掉远程仓库重建一个空的</td></tr>
+<tr data-page-node-id="vAj4GEga0j6la7Qf64B3b2"><td data-page-node-id="FssGnzx5lREkxzHNMSG6yu"><code data-page-node-id="pPu6js4gQQnkNdEBsXxWIs">Authentication failed</code> / <code data-page-node-id="T3VGNBQEmEqHe5rdVPpg1V">Support for password authentication was removed</code></td><td data-page-node-id="b4TeeBaQ1R8rZF1YsH1kcB">用了登录密码，或 token 过期 / 权限不够</td><td data-page-node-id="bJMt7oIUgdbFLZilm100lw">重新生成 token，勾选 <code data-page-node-id="NIkSPHE7ofaTyATz7IQvIo">repo</code>，粘贴时别带空格</td></tr>
+<tr data-page-node-id="FRoOTURqR47XGVpJjBv1fO"><td data-page-node-id="GWozSrixTR09RZ2HcRwKs2"><code data-page-node-id="kEZF4G9VBwZWVVP2H9b4Rw">fatal: not a git repository</code></td><td data-page-node-id="PhF87x6LywCJjlH6eopOQa">当前目录没初始化</td><td data-page-node-id="0HF7khN5PyvnvnYE46mirE">先 <code data-page-node-id="2xEZdzugow56aZyCECaK8f">git init</code>，或 <code data-page-node-id="eBvmvZRCzw09ylW0LS8yLk">cd</code> 到正确目录</td></tr>
+<tr data-page-node-id="MNAgMlbFPubumLxPXHfHiN"><td data-page-node-id="cpSnCvxJ8PG5YExrEdpNO3"><code data-page-node-id="cTmt9UPpHiwK9SPAmI0Ha4">refusing to merge unrelated histories</code></td><td data-page-node-id="QYVuXhTrukCEA0hDuiiYoI">本地和远程是两个不相干的仓库</td><td data-page-node-id="oZ7FoxBjgYONSIzARpfEzj"><code data-page-node-id="cBPASP8i1XOMT0WlsHC3PI">git pull origin main --allow-unrelated-histories</code></td></tr>
+<tr data-page-node-id="yLXicBcUpiAV4E7HvExpgx"><td data-page-node-id="Sr9IMBYmk1MMLfwL4KSlEq">Pages 链接 404</td><td data-page-node-id="yYFNvwujlYYiB4OHaAaAMC">还没部署完 / 分支选错 / 主文件不叫 index.html</td><td data-page-node-id="Ntj2XkJWDpLoX3cxBYfLcU">等 2 分钟；检查 Settings → Pages 里分支是 main、目录是 / (root)；确认首页文件叫 index.html</td></tr>
+<tr data-page-node-id="GGGaUf45kW91JFRTDIweVc"><td data-page-node-id="15ukdXnDgCmFRQD8BP8cB8">页面打开了但样式全乱</td><td data-page-node-id="64NvAYF0qNSiEBEhQllH1X">相对路径不对，或 CSS/JS 没传上去</td><td data-page-node-id="VaAUE7c7xKAqnk2AhSDeGQ">检查文件是否都传了，且 index.html 在仓库根目录</td></tr>
+<tr data-page-node-id="SbJfZntpuEdmtcnhwMGb8E"><td data-page-node-id="FFfQHjMyBR1Bst4tbLMd6w">仓库名已存在</td><td data-page-node-id="FKcrrViDzzFEKgHEJVUEUP">这个用户名下已有同名仓库</td><td data-page-node-id="xTjEtq1pM7F81MMiwtGqXr">换个名字，或先删掉旧的</td></tr>
+<tr data-page-node-id="NQr21EhKjV0u3C4JaKIBGt"><td data-page-node-id="ypVfplTxqrhppRHHt7aIkM">上传时提示文件过大</td><td data-page-node-id="LarCTVmWWHwGrzj4xatqGB">单文件超过 25 MB（硬上限 100 MB）</td><td data-page-node-id="jhlqVVmw5xAF2s0O17nADu">压缩资源；视频/大文件不要放仓库，用别的方式托管</td></tr>
+</table>
+
+<h2 id="q6" data-page-node-id="WEWZ8yTgUObbHeqGLlWTDh">6. 拿到链接之后</h2>
+
+<div class="two" data-page-node-id="5TiO4LhNaZRKiJThBPo4Kd">
+<div data-page-node-id="i0g1OQcv0fwfFEZTc7546S">
+<h4 data-page-node-id="hZT2um1COiD1zuhswGhktp">两条链接怎么用</h4>
+<table data-page-node-id="yyhUHg8gtI2dbdh3X83QBj">
+<tr data-page-node-id="MQx3kdgARg3nOFi6LxQoHE"><th data-page-node-id="cjaw09VAIrdMO0Tn02BDuo">链接</th><th data-page-node-id="ticLJP8ySZyA8rxr5ZwGAJ">特点</th></tr>
+<tr data-page-node-id="sEmUKlNDW9JVFE5rEuAt7g"><td data-page-node-id="qZUGWZBA2rS8oMhA7RZzuK"><code data-page-node-id="JlbVWLwL7Jxh04zxPkc0YU">github.io</code></td><td data-page-node-id="YOTiYmvR8Qu4dId1mAALIK">跟你个人账号绑定，不删仓库就一直在；面试官看得到源码</td></tr>
+<tr data-page-node-id="yMoLERFTSzBkrUwCAsMKNm"><td data-page-node-id="sKd6roVBx9vkQaGzOHx6Sg">WorkBuddy 链接</td><td data-page-node-id="zHxJr0ZcEL0yniapfQGU1H">国内直连、打开快，但挂在工作台账号下</td></tr>
+</table>
+<p data-page-node-id="mRd0cTknVoXouKlG142Xpk">作品集里<strong data-page-node-id="pqx9yASB5vx3PkP8ZFwmYM">两个都放</strong>：GitHub 那个当主链接（显得专业、能看源码），WorkBuddy 那个当国内备用。</p>
+</div>
+<div data-page-node-id="ICfDjLBjOjMuGPGguNUrWu">
+<h4 data-page-node-id="bBrZgmg8A8DbBP4JddXWE2">顺手补的三件小事</h4>
+<ol data-page-node-id="YBO3NZKdpCelJQBrRLguT2">
+<li data-page-node-id="I3XHMB4PkBGGr54XaQJwn6"><b data-page-node-id="dK75rT2HKdMLWZBYFxzBSj">加话题标签</b>：仓库 About 右边的齿轮 → 填 <code data-page-node-id="A9IvguVpHEyStpj5JF5odR">docx</code>、<code data-page-node-id="yFQoXuCXzoH8GHTo9ixkfv">thesis</code>、<code data-page-node-id="0JRfTI5XDrebnVMjYHcbbY">frontend</code>、<code data-page-node-id="PJu2AoAx2Fq6DTaVNJMAcg">format-checker</code>，别人能搜到</li>
+<li data-page-node-id="ABitGSFivpmDGdTNcFU3k5"><b data-page-node-id="9LEgn4soshVY9vezbyC4T8">把仓库置顶</b>：个人主页 → Pinned → Edit pinned items</li>
+<li data-page-node-id="oFNfKfYX5oH8jM2GqyW2Em"><b data-page-node-id="sDJbPBrqqkvpqt28nAJju3">发一个 Release</b>：仓库右侧 Releases → Create a new release，标签填 <code data-page-node-id="Cks6nKb7Dv7X3nYoSGr9Dc">v1.0</code>，把 index.html 附上，别人可以直接下载离线版</li>
+</ol>
+</div>
+</div>
+
+<div class="callout ok" data-page-node-id="4M4KLqN9K30IeCXOnSTAvg">
+<p data-page-node-id="wrqS6UtYqEju1BjVmetB2J"><strong data-page-node-id="z5oXcYTLdCHxp5bjBoVCUk">对求职的意义：</strong>一个能打开的工具链接 + 一份讲清「解决什么问题、怎么设计、怎么实现」的 README，比简历上写「熟悉前端」有说服力得多。README 里那几段设计要点（规则项与参数分离、抽取+人工确认闭环）记得保留，那是面试能聊的东西。</p>
+</div>
+
+<footer data-page-node-id="sxTMcwuuu5jwZAHFE9qmkv">
+本手册针对「把本地网页小工具发布到 GitHub Pages」这一件事写成，其余功能（分支协作、CI、Actions）暂不涉及，用到时再学。
+</footer>
+
+</main>
+</div>
+</body>
+</html>
